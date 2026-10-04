@@ -1,0 +1,14 @@
+##SpeedFast Backend
+Proyecto integrador desarrollado para la asignatura Desarrollo Orientado a Objetos II
+
+SpeedFast es una aplicación de consola creada en Java para gestionar repartidores, pedidos y
+entregas. El proyecto reúne los contenidos trabajados desde la semana S1 hasta la semana S8,
+incluyendo programación orientada a objetos, concurrencia, conexión JDBC y operaciones CRUD con MySQL.
+
+#Tecnologías utilizadas
+- Java SE.
+- IntelliJ IDEA.
+- MySQL Workbench.
+- JDBC.
+- MySQL Connector/J.
+- GitHub.
