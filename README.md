@@ -22,27 +22,58 @@ Contiene los atributos y comportamientos comunes de todos los pedidos:
 - Estado del pedido.
 - Historial de operaciones.
 
-También declara el método abstracto calcularTiempoEntrega(), que debe ser implementado por cada subclase.
+También declara el método abstracto `calcularTiempoEntrega()`, que debe ser implementado por cada subclase.
 
 # Tipos de pedido
-- PedidoComida: requiere un repartidor con mochila térmica.
-- PedidoEncomienda: requiere validación de peso y embalaje.
-- PedidoExpress: requiere un repartidor cercano y con disponibilidad inmediata.
+- **PedidoComida:** requiere un repartidor con mochila térmica.
+- **PedidoEncomienda:** requiere validación de peso y embalaje.
+- **PedidoExpress:** requiere un repartidor cercano y con disponibilidad inmediata.
 
 # Interfaces
-- Despachable: permite cambiar un pedido a estado EN_REPARTO.
-- Cancelable: permite cancelar un pedido.
-- Rastreable: permite consultar su historial.
+- **Despachable:** permite cambiar un pedido a estado `EN_REPARTO`.
+- **Cancelable:** permite cancelar un pedido.
+- **Rastreable:** permite consultar su historial.
 
 # Estados
-La enumeración EstadoPedido contiene los siguientes valores:
+La enumeración **EstadoPedido** contiene los siguientes valores:
 
-</>
-PENDIENTE
-EN_REPARTO
+PENDIENTE,
+EN_REPARTO,
 ENTREGADO
 
 # Concurrencia
 La clase Repartidor implementa Runnable, por lo que cada repartidor puede ejecutar su trabajo en un hilo.
 La clase ZonaDeCarga utiliza una BlockingQueue<Pedido> como recurso compartido. Esto permite que los pedidos sean retirados de uno en uno y evita que dos repartidores procesen el mismo pedido.
 ExecutorService administra la ejecución concurrente de los repartidores.
+
+# Estructura del proyecto
+```
+SpeedFast/
+├── database/
+│   └── speedfast_db.sql
+├── lib/
+│   └── mysql-connector-j-x.x.x.jar
+└── src/
+    ├── app/
+    │   ├── Main.java
+    │   ├── MenuConsola.java
+    │   ├── PruebaConexion.java
+    │   └── PruebaDAO.java
+    ├── dao/
+    │   ├── ConexionDB.java
+    │   ├── RepartidorDAO.java
+    │   ├── PedidoDAO.java
+    │   └── EntregaDAO.java
+    ├── interfaces/
+    │   ├── Despachable.java
+    │   ├── Cancelable.java
+    │   └── Rastreable.java
+    └── model/
+        ├── EstadoPedido.java
+        ├── Pedido.java
+        ├── PedidoComida.java
+        ├── PedidoEncomienda.java
+        ├── PedidoExpress.java
+        ├── Repartidor.java
+        ├── ZonaDeCarga.java
+        └── Entrega.java
