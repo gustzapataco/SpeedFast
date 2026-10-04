@@ -3,7 +3,6 @@ Proyecto integrador desarrollado para la asignatura Desarrollo Orientado a Objet
 
 SpeedFast es una aplicación de consola creada en Java para gestionar repartidores, pedidos y entregas. El proyecto reúne los contenidos trabajados desde la semana S1 hasta la semana S8, incluyendo programación orientada a objetos, concurrencia, conexión JDBC y operaciones CRUD con MySQL.
 
---
 ## Tecnologías utilizadas
 
 - Java SE.
@@ -13,7 +12,6 @@ SpeedFast es una aplicación de consola creada en Java para gestionar repartidor
 - MySQL Connector/J.
 - GitHub.
 
---
 ## Modelo orientado a objetos
 # Clase abstracta Pedido
 Contiene los atributos y comportamientos comunes de todos los pedidos:
