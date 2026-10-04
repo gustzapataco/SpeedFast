@@ -24,15 +24,15 @@ Contiene los atributos y comportamientos comunes de todos los pedidos:
 
 También declara el método abstracto `calcularTiempoEntrega()`, que debe ser implementado por cada subclase.
 
-# Tipos de pedido
-- **PedidoComida:** requiere un repartidor con mochila térmica.
-- **PedidoEncomienda:** requiere validación de peso y embalaje.
-- **PedidoExpress:** requiere un repartidor cercano y con disponibilidad inmediata.
+# Tipos de `pedido`
+- `**PedidoComida:**` requiere un repartidor con mochila térmica.
+- `**PedidoEncomienda:**` requiere validación de peso y embalaje.
+- `**PedidoExpress:**` requiere un repartidor cercano y con disponibilidad inmediata.
 
 # Interfaces
-- **Despachable:** permite cambiar un pedido a estado `EN_REPARTO`.
-- **Cancelable:** permite cancelar un pedido.
-- **Rastreable:** permite consultar su historial.
+- `**Despachable:**` permite cambiar un pedido a estado `EN_REPARTO`.
+- `**Cancelable:**` permite cancelar un pedido.
+- `**Rastreable:**` permite consultar su historial.
 
 # Estados
 La enumeración **EstadoPedido** contiene los siguientes valores:
@@ -77,3 +77,90 @@ SpeedFast/
         ├── Repartidor.java
         ├── ZonaDeCarga.java
         └── Entrega.java
+```
+# Base de datos
+El proyecto utiliza la base de datos `speedfast_db`.
+
+```
+CREATE DATABASE IF NOT EXISTS speedfast_db;
+USE speedfast_db;
+
+CREATE TABLE repartidores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE pedidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    direccion VARCHAR(150) NOT NULL,
+    tipo ENUM('COMIDA', 'ENCOMIENDA', 'EXPRESS') NOT NULL,
+    estado ENUM('PENDIENTE', 'EN_REPARTO', 'ENTREGADO') NOT NULL
+);
+
+CREATE TABLE entregas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_pedido INT NOT NULL,
+    id_repartidor INT NOT NULL,
+    fecha DATE NOT NULL,
+    hora TIME NOT NULL,
+    CONSTRAINT fk_entrega_pedido
+        FOREIGN KEY (id_pedido) REFERENCES pedidos(id),
+    CONSTRAINT fk_entrega_repartidor
+        FOREIGN KEY (id_repartidor) REFERENCES repartidores(id)
+);
+
+```
+
+# Configuración MySQL Workbench
+1. Abrir la conexión local de MySQL.
+2. Crear una pestaña SQL nueva.
+3. Copiar el contenido de `database/speedfast_db.sql`.
+4. Ejecutar el script con el icono del rayo.
+5. Actualizar la sección SCHEMAS.
+6. Comprobar que aparezcan las tablas `repartidores`, `pedidos` y `entregas`.
+
+Para verificar las tablas:
+```
+USE speedfast_db;
+SHOW TABLES;
+
+SELECT * FROM repartidores;
+SELECT * FROM pedidos;
+SELECT * FROM entregas;
+
+```
+
+# Configuración de JDBC en IntelliJ IDEA
+1. Descargar MySQL Connector/J.
+2. Abrir File > Project Structure.
+3. Seleccionar Modules > Dependencies.
+4. Presionar `+` y seleccionar JARs or Directories.
+5. Agregar el archivo `mysql-connector-j-x.x.x.jar`.
+6. Verificar que su alcance sea Compile.
+7. Ejecutar Build > Rebuild Project.
+
+# Configuración de la conexión
+En `**ConexionDB.java**` se deben configurar los datos correspondientes al servidor local:
+
+```
+private static final String URL =
+        "jdbc:mysql://localhost:3306/speedfast_db";
+
+private static final String USUARIO = "root";
+private static final String CONTRASENA = "TU_CONTRASENA";
+
+```
+Se debe reemplazar `TU_CONTRASENA` por la contraseña real del usuario de MySQL.
+
+# Menú de consola
+```
+====================================
+=== SPEEDFAST ===
+====================================
+1. Gestionar repartidores
+2. Gestionar pedidos
+3. Gestionar entregas
+4. Simular entregas concurrentes
+5. Salir
+====================================
+```
