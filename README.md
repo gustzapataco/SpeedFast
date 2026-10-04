@@ -55,10 +55,14 @@ SpeedFast/
 │   └── mysql-connector-j-x.x.x.jar
 └── src/
     ├── app/
+    │   ├── DiagnosticoConexion.java
     │   ├── Main.java
     │   ├── MenuConsola.java
     │   ├── PruebaConexion.java
-    │   └── PruebaDAO.java
+    │   ├── PruebaDAO.java
+    │   ├── PruebaEntregaCRUD.java
+    │   ├── PruebaPedidoCRUD.java
+    │   └── PruebaRepartidorCRUD.java
     ├── dao/
     │   ├── ConexionDB.java
     │   ├── RepartidorDAO.java
@@ -152,7 +156,7 @@ private static final String CONTRASENA = "TU_CONTRASENA";
 ```
 Se debe reemplazar `TU_CONTRASENA` por la contraseña real del usuario de MySQL.
 
-# Menú de consola
+# Menú de consola en IntelliJ IDEA
 ```
 ====================================
 === SPEEDFAST ===
@@ -164,3 +168,31 @@ Se debe reemplazar `TU_CONTRASENA` por la contraseña real del usuario de MySQL.
 5. Salir
 ====================================
 ```
+
+# Consulta final en SQL Workbench
+La siguiente consulta permite revisar conjuntamente pedidos, repartidores y entregas:
+
+```
+SELECT
+    e.id AS entrega,
+    p.id AS pedido,
+    p.direccion,
+    p.tipo,
+    p.estado,
+    r.id AS repartidor,
+    r.nombre,
+    e.fecha,
+    e.hora
+FROM entregas e
+INNER JOIN pedidos p
+    ON p.id = e.id_pedido
+INNER JOIN repartidores r
+    ON r.id = e.id_repartidor
+ORDER BY e.id;
+
+```
+
+# Autor:
+**Gustavo Zapata Covarrubias**
+Analista Programador | 2026
+-- DUOC UC Aula Virtual --
